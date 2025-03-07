@@ -10,16 +10,16 @@ import time
 
 def plot_rcvM():
 
-    numNodes = 100
+    numNodes = 120
 
-    simTime = 500
+    simTime = 10
     numOCW = 1
     numOBW = 280
     numGrids = 8
-    timeGranularity = 6
-    freqGranularity = 25
+    timeGranularity = 1
+    freqGranularity = 10
     numDecoders = 500
-    CR = 1
+    CR = 2
     use_earlydecode = True
     use_earlydrop = True
     use_headerdrop = False
@@ -107,32 +107,32 @@ def plot_rcvM():
 
     #print(network.get_OCWch2annel_occupancy())
 
-    #print_m(count_dynamic_rcvM[0], 'counts.png')
+    print_m(count_dynamic_rcvM[0], 'counts.png')
     #print_m(binary_matrix, 'bin.png')
     #print_m(value3_matrix, '3value.png')
     #print_m(decoded_m[0], 'dcdd.png')
     #print_m(diff, 'diff.png')
-    print_m2(spec_density)
+    #print_m2(spec_density)
 
 
 def get_simdata(v):
 
     runs = 10
-    simTime = 500
+    simTime = 27
     numOCW = 1
     numOBW = 280
     numGrids = 8
-    timeGranularity = 6
-    freqGranularity = 25
+    timeGranularity = 1
+    freqGranularity = 10
     numDecoders = 800
-    CR = 1
+    CR = 2
     use_earlydecode = True
     use_earlydrop = True
     use_headerdrop = False
     familyname = "driver" # driver - lifan
 
     power = False
-    dynamic = False # NO SUPPORT FOR STATIC DOPPLER IN exhaustive search
+    dynamic = True # NO SUPPORT FOR STATIC DOPPLER IN exhaustive search
     collision_method = "strict" # strict - SINR
 
     numNodes = int(v)
@@ -197,8 +197,8 @@ def runsim():
 
     print('driver \tCR = 1\tprocessors = 800\tearly d/d = YES\thdr drop = NO')
 
-    netSizes = np.logspace(1.0, 3.0, num=40) # np.logspace(1.0, 3.0, num=40)
-    #netSizes = [100000]
+    #netSizes = np.logspace(1.0, 3.0, num=40) # np.logspace(1.0, 3.0, num=40)
+    netSizes = np.linspace(1,500,100)
 
     # parallel simulation available when NOT USING parallel FHSlocator
     #pool = Pool(processes = 10)
@@ -208,7 +208,7 @@ def runsim():
 
     result = [get_simdata(nodes) for nodes in netSizes]
     
-    basestr = 'driver-'
+    basestr = 'cr2_'
     print(basestr+'tracked_txs,', [round(i[0],6) for i in result])
     print(basestr+'header_drop_packets,', [round(i[1],6) for i in result])
     print(basestr+'decoded_bytes,', [round(i[2],6) for i in result])

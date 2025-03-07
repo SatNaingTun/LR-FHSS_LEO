@@ -84,7 +84,8 @@ class LoRaNode():
         """
 
         ocw = random.randrange(0, self.numOCW)
-        startSlot = random.randrange(0, self.startLimit)
+        #startSlot = random.randrange(0, self.startLimit)
+        startSlot = 0
 
         if self.CR == 1:
             payload_size = random.randrange(13, 58)  # [8-31[ fragments
@@ -96,6 +97,8 @@ class LoRaNode():
 
         else:
             raise Exception(f"Invalid coding rate '{self.CR}'") 
+        
+        payload_size = 20
 
         numFragments = int(self.numHops(payload_size))
         seq_length = int(numFragments + numHeaders)
